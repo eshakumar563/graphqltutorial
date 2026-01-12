@@ -1,14 +1,20 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-/** importing our pages */
 import Tracks from "./tracks";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-export default function Pages() {
-  return (
+const client = new ApolloClient({
+  uri: "https://graphql.org/swapi-graphql",
+  cache: new InMemoryCache(),
+});
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
     <BrowserRouter>
       <Routes>
         <Route element={<Tracks />} path="/" />
       </Routes>
     </BrowserRouter>
-  );
-}
+  </ApolloProvider>,
+  document.getElementById("root")
+);
